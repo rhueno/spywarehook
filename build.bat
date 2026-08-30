@@ -2,6 +2,8 @@
 setlocal EnableExtensions
 cd /d "%~dp0"
 
+// wow
+
 if /I not "%DEBUG_OK%"=="1" (
     findstr /C:"DEBUG = true" "core\config\Cfg.java" >nul 2>&1
     if not errorlevel 1 (
