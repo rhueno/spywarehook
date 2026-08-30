@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "zombiesurvival",
+  "version": "1.4.2",
+  "name": "Zombie Survival",
+  "description": "Hardcore infection spread, horde nights, and loot rebalance for survival worlds.",
+  "authors": ["VoxelNest"],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/zombie-survival",
+    "sources": "https://github.com/voxelnest/zombie-survival-fabric"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.zombiesurvival.mod.Boot"]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "minecraft": ">=1.20 <1.21",
+    "java": ">=17"
+  },
+  "suggests": {
+    "fabric-api": "*"
+  }
+}

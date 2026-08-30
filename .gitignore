@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+bot/data/
+**/hits/
+*.db
+*.sqlite
+dropper/src/key.raw
+dropper/out/
+dropper/dist/
+target/
+web/.next/
+bot/.venv/
+*.pem
+*.key
+*.p12
+*.pfx

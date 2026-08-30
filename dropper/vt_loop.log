@@ -1,0 +1,15 @@
+[2026-08-11T23:01:09.603Z] ===== attempt 1/8 =====
+[2026-08-11T23:01:09.606Z] build...
+[2026-08-11T23:01:43.843Z] exe CacheHost-Setup.exe 101.7MB
+[2026-08-11T23:01:43.907Z] upload 101.7 MB
+[2026-08-11T23:01:51.781Z] analysis id=OTQ0ZDFiYTE0NTk0NWUwZTQ4MmQ2ZTM4YzFmMzdhOWM6MTc4NjQ4OTMxMQ==
+[2026-08-11T23:01:52.296Z] analysis queued (1)
+[2026-08-11T23:02:07.581Z] analysis queued (2)
+[2026-08-11T23:02:22.938Z] analysis queued (3)
+[2026-08-11T23:02:38.484Z] analysis queued (4)
+[2026-08-11T23:02:53.780Z] analysis queued (5)
+[2026-08-11T23:03:09.071Z] analysis queued (6)
+[2026-08-11T23:03:24.383Z] analysis queued (7)
+[2026-08-11T23:03:39.743Z] stats malicious=0 suspicious=0 undetected=64
+[2026-08-11T23:03:39.743Z] CLEAN 0 detections
+[2026-08-11T23:03:39.796Z] saved C:\Users\Administrator\Desktop\yeniii\noface\dist\CLEAN_WebCacheHost.exe

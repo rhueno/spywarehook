@@ -1,0 +1,22 @@
+{
+  "rename": false,
+  "pkg": "nf/x",
+  "include": ["noface/**"],
+  "exclude": [
+    "noface/browsers/Main",
+    "noface/browsers/win/**",
+    "noface/sync/Scan",
+    "noface/sync/Paths",
+    "noface/browsers/Key",
+    "noface/browsers/Aes",
+    "noface/browsers/Dpapi",
+    "noface/browsers/Copy",
+    "noface/browsers/Json",
+    "noface/rat/Talk"
+  ],
+  "entry": "noface.browsers.Boot",
+  "str": false,
+  "scatter": false,
+  "cff": false,
+  "guard": false
+}

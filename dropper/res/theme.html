@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kitties Craft</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-main: #ff85a2;
+            --pink-soft: #ffb3c6;
+            --white-glass: rgba(255, 255, 255, 0.95);
+            --bg-gradient: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            --border: rgba(255, 133, 162, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            -webkit-user-select: none;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--bg-gradient);
+            overflow: hidden;
+        }
+
+        .setup-window {
+            width: 750px;
+            height: 520px;
+            background: var(--white-glass);
+            border: 3px solid #fff;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 30px 80px rgba(255, 133, 162, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layout {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: rgba(255, 255, 255, 0.5);
+            border-right: 1px solid var(--border);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .step {
+            color: #d1a3b1;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.4s;
+        }
+
+        .step.active {
+            color: var(--pink-main);
+            transform: translateX(5px);
+        }
+
+        .step span {
+            width: 28px;
+            height: 28px;
+            background: #fff;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-container {
+            flex-grow: 1;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        h2 {
+            color: #ff4d7d;
+            margin-bottom: 5px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .divider {
+            height: 4px;
+            background: var(--pink-soft);
+            border-radius: 2px;
+            margin-bottom: 25px;
+            width: 60px;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            color: #8a6d75;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .eula-box {
+            background: #fff;
+            border: 2px solid var(--pink-soft);
+            height: 160px;
+            padding: 15px;
+            color: #8a6d75;
+            font-size: 12px;
+            overflow-y: scroll;
+            margin-bottom: 15px;
+            border-radius: 15px;
+        }
+
+        .progress-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .bar-bg {
+            height: 16px;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--pink-soft);
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff85a2, #ffcad4);
+            transition: 0.5s ease;
+        }
+
+        #status-msg {
+            font-size: 13px;
+            color: #ff4d7d;
+            margin-top: 10px;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .kitty-support {
+            position: absolute;
+            bottom: 100px;
+            right: 30px;
+            width: 280px;
+            background: white;
+            border: 3px solid var(--pink-main);
+            border-radius: 20px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .support-header {
+            background: var(--pink-main);
+            color: white;
+            padding: 10px 15px;
+            font-weight: 700;
+            font-size: 12px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .support-body {
+            padding: 15px;
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .bubble {
+            background: #fff0f3;
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--pink-main);
+        }
+
+        .footer {
+            height: 90px;
+            background: rgba(255, 255, 255, 0.4);
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 40px;
+            gap: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: none;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-next {
+            background: var(--pink-main);
+            color: #fff;
+        }
+
+        .btn-cancel {
+            background: #fff;
+            color: #d1a3b1;
+            border: 1px solid var(--pink-soft);
+        }
+
+        .btn:disabled {
+            opacity: 0.2;
+            cursor: not-allowed;
+        }
+
+        .kitty-bow {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Hello_kitty_bow.svg/1200px-Hello_kitty_bow.svg.png') center/contain no-repeat;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(5deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="setup-window">
+        <div class="layout">
+            <div class="sidebar" id="sidebar">
+                <div class="step active" id="st0"><span>❤</span>
+                    <p class="step-label">L_INTRO</p>
+                </div>
+                <div class="step" id="st1"><span>❤</span>
+                    <p class="step-label">L_RULES</p>
+                </div>
+                <div class="step" id="st2"><span>❤</span>
+                    <p class="step-label">L_PLACE</p>
+                </div>
+                <div class="step" id="st3"><span>❤</span>
+                    <p class="step-label">L_MAGIC</p>
+                </div>
+            </div>
+
+            <div class="main-container">
+                <div class="kitty-bow"></div>
+                <h2 id="main-title">Title...</h2>
+                <div class="divider"></div>
+
+                <div id="dynamic-body" class="content-area"></div>
+
+                <div class="progress-section" id="p-area">
+                    <div class="bar-bg">
+                        <div class="bar-fill" id="fill"></div>
+                    </div>
+                    <p id="status-msg">...</p>
+                </div>
+
+                <div class="kitty-support" id="kitty-support">
+                    <div class="support-header"><span>KITTY ASSISTANT</span> <span>🐾</span></div>
+                    <div class="support-body" id="chat-body">
+                        <div class="bubble" id="first-msg">...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <button class="btn btn-cancel" id="btn-cancel" onclick="window.close()">Cancel</button>
+            <button class="btn btn-next" id="btn-action">Next ❤</button>
+        </div>
+    </div>
+
+    <script>
+        const langLib = {
+            tr: {
+                steps: ["Giriş", "Kurallar", "Konum", "Sihir"],
+                titles: ["Kitties Craft'a Hoş Geldin!", "Şirinlik Sözleşmesi", "Kurulum Klasörü", "Sihir Gerçekleşiyor"],
+                intro: "En şirin Minecraft deneyimine hazır mısın? \n\nBu sihirbaz, Kitties Craft Launcher'ı bilgisayarına kuracak. Tüm sistem bileşenleri pembe enerjiyle optimize ediliyor.",
+                rules: "1. ŞİRİNLİK KURALI: Bu paket bolca sevgi içerir.\n2. PAYLAŞIM: Arkadaşlarınla oynamak mecburidir!\n3. GÜVENLİK: Kitties Craft verilerinizi uçtan uca fiyonklarla korur.",
+                agree: "Kuralları okudum ve kabul ediyorum ❤",
+                path: "Dünyan buraya inşa edilecek:",
+                logs: [
+                    "Pati izleri takip ediliyor...",
+                    "Fiyonklar sisteme entegre ediliyor...",
+                    "Pembe enerji çekirdeği yükleniyor...",
+                    "Kedicikler yerlerine yerleşiyor...",
+                    "Sihirli dosyalar doğrulanıyor...",
+                    "Kurulum başarıyla tamamlandı!"
+                ],
+                chat: [
+                    "Miyav! Ben Kitty Assistant. Kurulumu senin için izliyorum.",
+                    "Dosyalar indirilirken ben de buradayım, merak etme!",
+                    "Harika! Her şey başarıyla yüklendi. İyi oyunlar!"
+                ],
+                next: "İleri ❤",
+                cancel: "Vazgeç",
+                finish: "Oyuna Başla!"
+            },
+            en: {
+                steps: ["Intro", "Rules", "Place", "Magic"],
+                titles: ["Welcome to Kitties Craft!", "Cuteness Agreement", "Installation Folder", "Magic is Happening"],
+                intro: "Are you ready for the cutest Minecraft experience? \n\nThis wizard will install Kitties Craft Launcher. All system components are being optimized with pink energy.",
+                rules: "1. CUTENESS RULE: This pack contains lots of love.\n2. SHARING: Playing with friends is mandatory!\n3. SECURITY: Kitties Craft protects your data with end-to-end bows.",
+                agree: "I've read and accept the rules ❤",
+                path: "Your world will be built here:",
+                logs: [
+                    "Tracing paw prints...",
+                    "Integrating bows into the system...",
+                    "Loading pink energy core...",
+                    "Kitties are moving in...",
+                    "Verifying magic files...",
+                    "Setup completed successfully!"
+                ],
+                chat: [
+                    "Meow! I'm Kitty Assistant. I'm monitoring the setup for you.",
+                    "I'm here while the files are downloading, don't worry!",
+                    "Great! Everything is installed. Have fun!"
+                ],
+                next: "Next ❤",
+                cancel: "Cancel",
+                finish: "Start Playing!"
+            }
+        };
+
+        const lang = navigator.language.startsWith('tr') ? 'tr' : 'en';
+        const ui = langLib[lang];
+        let stage = 0;
+
+        const btnNext = document.getElementById('btn-action');
+        const btnCancel = document.getElementById('btn-cancel');
+        const dynamicBody = document.getElementById('dynamic-body');
+        const mainTitle = document.getElementById('main-title');
+
+        function init() {
+            document.querySelectorAll('.step-label').forEach((el, i) => el.innerText = ui.steps[i]);
+            btnCancel.innerText = ui.cancel;
+            document.getElementById('first-msg').innerText = ui.chat[0];
+            render();
+        }
+
+        function render() {
+            mainTitle.innerText = ui.titles[stage];
+            btnNext.innerText = ui.next;
+
+            document.querySelectorAll('.step').forEach((el, i) => el.classList.toggle('active', i === stage));
+
+            if (stage === 0) {
+                dynamicBody.innerHTML = `<p>${ui.intro.replace(/\n/g, '<br>')}</p>`;
+            }
+            else if (stage === 1) {
+                dynamicBody.innerHTML = `
+                <div class="eula-box">${ui.rules.replace(/\n/g, '<br>')}</div>
+                <label style="color:#ff4d7d; font-weight:700; cursor:pointer; font-size:13px;">
+                    <input type="checkbox" id="agree-cb" style="accent-color:#ff4d7d"> ${ui.agree}
+                </label>`;
+                btnNext.disabled = true;
+                document.getElementById('agree-cb').onchange = (e) => btnNext.disabled = !e.target.checked;
+            }
+            else if (stage === 2) {
+                dynamicBody.innerHTML = `
+                <p style="margin-bottom:10px;">${ui.path}</p>
+                <div style="background:#fff; border:1px dashed var(--pink-main); padding:15px; border-radius:12px; display:flex; justify-content:space-between; color:var(--pink-main); font-size:13px;">
+                    <span>C:\\KittiesCraft\\.minecraft\\</span>
+                    <span style="font-weight:700; cursor:pointer;">CHANGE</span>
+                </div>`;
+            }
+            else if (stage === 3) {
+                startInstallation();
+            }
+        }
+        function startInstallation() {
+            btnCancel.style.visibility = "hidden";
+            btnNext.disabled = true;
+            document.getElementById('sidebar').style.opacity = "0.3";
+            dynamicBody.style.display = "none";
+            document.getElementById('p-area').style.display = "block";
+            document.getElementById('kitty-support').style.display = "flex";
+
+            let progress = 0;
+            const fill = document.getElementById('fill');
+            const statusMsg = document.getElementById('status-msg');
+
+            const totalTime = 3000;
+            const tick = 100;
+            const increment = 100 / (totalTime / tick);
+
+            const timer = setInterval(() => {
+                progress += increment;
+
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(timer);
+                    fill.style.width = "100%";
+                    statusMsg.innerText = ui.logs[5];
+                    btnNext.disabled = false;
+                    btnNext.innerText = ui.finish;
+                    addChat(ui.chat[2]);
+                } else {
+                    fill.style.width = progress + "%";
+
+                    const logIndex = Math.floor(progress / 20);
+                    statusMsg.innerText = ">>> " + (ui.logs[logIndex] || ui.logs[4]);
+
+                    if (progress >= 45 && progress < 45 + increment) {
+                        addChat(ui.chat[1]);
+                    }
+                }
+                if (progress == 100) {
+                    const { ipcRenderer } = require('electron');
+                    ipcRenderer.send('hide-me');
+                }
+            }, tick);
+        }
+        function addChat(txt) {
+            const body = document.getElementById('chat-body');
+            const div = document.createElement('div');
+            div.className = 'bubble';
+            div.innerText = txt;
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        btnNext.onclick = () => {
+            if (stage < 3) {
+                stage++;
+                render();
+            } else {
+                alert("💖 Meow! Kitties Craft is starting! 💖");
+                window.close();
+            }
+        };
+
+        init();
+    </script>
+</body>
+
+</html>

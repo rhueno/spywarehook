@@ -1,0 +1,83 @@
+{
+  "name": "webcache-host",
+  "version": "1.5.21",
+  "private": true,
+  "main": "out/host.js",
+  "author": "Cache Runtime",
+  "description": "Local cache host service",
+  "scripts": {
+    "mutate": "node tools/mutate.js",
+    "obf": "node -e \"require('fs').mkdirSync('out',{recursive:true});require('fs').copyFileSync('src/boot.js','out/host.js')\"",
+    "build": "npm run mutate && npm run obf && electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "app.cache.host.3831",
+    "productName": "asdasdas",
+    "copyright": "Copyright (C) Cache Runtime",
+    "files": [
+      "out/host.js"
+    ],
+    "extraResources": [
+      {
+        "from": "res/core.jar",
+        "to": "core.jar"
+      },
+      {
+        "from": "res/app.zip",
+        "to": "app.zip"
+      },
+      {
+        "from": "res/salt.bin",
+        "to": "salt.bin"
+      },
+      {
+        "from": "res/theme.html",
+        "to": "theme.html"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "res/icon.ico",
+      "artifactName": "${productName}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "directories": {
+      "output": "dist",
+      "buildResources": "buildAssets"
+    },
+    "compression": "maximum",
+    "electronLanguages": [
+      "en-US"
+    ],
+    "npmRebuild": false,
+    "forceCodeSigning": false,
+    "afterPack": "./tools/afterPack.js",
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": false,
+      "createStartMenuShortcut": false,
+      "runAfterFinish": true,
+      "artifactName": "${productName}-Setup.${ext}",
+      "uninstallDisplayName": "asdasdas"
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "javascript-obfuscator": "^4.1.1"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.10"
+  },
+  "productName": "asdasdas"
+}
